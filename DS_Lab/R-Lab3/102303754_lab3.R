@@ -108,4 +108,35 @@ CW[,4]
 all_submatrices <- function(mat, r, c) {
     nrows <- nrow(mat)
     ncols <- ncol(mat)
+
+    subs <- list()
+    keys <- character() # Gives me an empty vector of type `string`/`character`!!!
+    idx <- 1
+    for (r_start in 1:r) {
+        for (r_end in r:nrows) {
+            for (c_start in 1:c) {
+                for (c_end in c:ncols) {
+
+                    sub <- mat[r_start:r_end, c_start:c_end, drop=FALSE]
+                    # drop=FALSE prevents the automatic simplification of a single column/row into a vector!
+
+                    key <- paste(nrow(sub), ncol(sub), paste(sub, collapse=","), sep="|")
+                    # `collapse` just flattens my matrix with a separator
+
+                    if (key %in% keys) {
+                        next # Skips to next sub-matrix
+                    } else {
+                        subs[[idx]] <- sub
+                        keys <- c(keys, key)
+                        idx <- idx + 1
+                    }
+                }
+            }
+        }
+    }
+
+    return(subs)
 }
+
+all_submatrices(RW, 2, 3)
+all_submatrices(CW, 2, 4)
