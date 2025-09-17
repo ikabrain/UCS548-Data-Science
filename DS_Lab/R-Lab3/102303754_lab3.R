@@ -59,7 +59,7 @@ print(paste("Decreasing A = C =", paste(C, collapse=", ")))
 r <- 3
 c <- 4
 n <- r * c
-matrix(data = c(1:n), nrow = r, ncol = c)
+matrix(data = c(1:n), nrow = r, ncol = c, byrow=TRUE)
 
 
 
@@ -68,14 +68,15 @@ m <- as.integer(readline(prompt = "Enter number of rows in new matrix: "))
 n <- as.integer(readline(prompt = "Enter number of columns in new matrix: "))
 
 D <- c(A, B, C)
+E <- c()
 if (length(D) != m*n) {
     warning(paste("In the new matrix, data length differs from size of matrix:", length(D), "!=", m, "x", n))
-    if (length(D) > m*n) {
-        E <- c()
-    } else {
+    if (length(D) < m*n) {
         E <- rep(0, m*n - length(D))
     }
 }
+
+
 
 RW <- matrix(c(D, E), nrow = m, ncol = n, byrow = TRUE)
 print("Row-wise Matrix:-")
@@ -98,3 +99,13 @@ CW[,4]
 
 
 # Q12. Using both RW and CW find sub-matrices having elements [2, 3] and [2, 4].
+# A12.  A sub-matrix with element @ [2, 3] can have
+#       rows starting from 1 - 2 and ending from 2 - nrows.
+#       And, for each of those possibilities,
+#       columns can start from 1 - 3 and end from 3 - ncols!!!
+
+# Function to get sub-matrices
+all_submatrices <- function(mat, r, c) {
+    nrows <- nrow(mat)
+    ncols <- ncol(mat)
+}
