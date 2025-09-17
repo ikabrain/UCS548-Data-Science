@@ -78,11 +78,11 @@ if (length(D) != m*n) {
 
 
 
-RW <- matrix(c(D, E), nrow = m, ncol = n, byrow = TRUE)
+RW <- matrix(c(D, E), nrow = m, ncol = n, byrow = TRUE) # Can also use rbind()
 print("Row-wise Matrix:-")
 print(RW)
 
-CW <- matrix(c(D, E), nrow = m, ncol = n, byrow = FALSE)
+CW <- matrix(c(D, E), nrow = m, ncol = n, byrow = FALSE) # Can also use cbind()
 print("Column-wise Matrix:-")
 print(CW)
 
