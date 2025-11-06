@@ -9,7 +9,7 @@ install.packages("dplyr")
 #****************************************************
 library(dplyr)
 library(tibble) # used to manipulate and print data frames
-mtcars_tbl <- as_data_frame(tibble::rownames_to_column(mtcars, "cars"))
+mtcars_tbl <- as.data.frame(tibble::rownames_to_column(mtcars, "cars"))
 #add the rownames of the dataset as a column using rownames_to_column
 #View top records
 head(mtcars_tbl)
@@ -58,9 +58,9 @@ rename(mtcars_tbl, cylinders = cyl, displacement = disp)    #Rename without drop
 
 #Use of mutate()
 #************************************************************************
-#mutate can be used to add new columns to the data. Columns are added at the end of the data.frame
+#mutate can be used to return added new columns to the data. Columns are added at the end of the data.frame
 mutate(mtcars_tbl, weight_ton = wt/2, weight_pounds = weight_ton * 2000)
-transmute(mtcars_tbl, weight_ton = wt/2, weight_pounds = weight_ton * 2000)  #To take new column only
+transmute(mtcars_tbl, weight_ton = wt/2, weight_pounds = weight_ton * 2000)  #To return data frame with new columns only
 
 
 #Use of summarise()
