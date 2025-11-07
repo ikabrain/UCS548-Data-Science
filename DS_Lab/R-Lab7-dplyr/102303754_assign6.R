@@ -140,7 +140,12 @@ data %>%
     slice_min(pop_sd, n = 3)
 
 # 9. Excluding records from a given year, which observations indicate that the population of a country has decreased from the previous year and the life expectancy has increased?
-
+# Here, I'll use `'lag()` - dplyr function that accesses previous row's value!
+year <- 2007
+data %>%
+    arrange(Country, Year) %>%
+    group_by(Country) %>% # If no grouping, filter will compare BETWEEN countries too
+    filter(Year != year, Pop < lag(Pop), LifeExp > lag(LifeExp))
 
 
 
