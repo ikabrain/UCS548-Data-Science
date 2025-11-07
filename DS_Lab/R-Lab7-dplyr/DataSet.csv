@@ -1,0 +1,11 @@
+"MedID","Med_Name","Company","Manf_year","Exp_date","Quantity_in_stock","Sales"
+1,"Paracetol","MediHealth",2018,2025-06-30,500,12000
+2,"Coughnil","PharmaLife",2019,2024-11-15,300,8500
+3,"GlucoFast","WellnessCo",2020,2026-03-01,450,15000
+4,"PainAway","MediHealth",2019,2023-10-12,150,4000
+5,"HealMax","HealthGen",2021,2025-09-05,700,18000
+6,"Allerclear","PharmaLife",2018,2024-02-20,200,6000
+7,"Coughnil Plus","PharmaLife",2022,2025-12-10,350,10000
+8,"GlucoFast XR","WellnessCo",2020,2026-09-18,400,14500
+9,"VitaCure","NutriLabs",2023,2026-01-01,250,9000
+10,"PainAway Forte","MediHealth",2019,2023-05-25,100,5000
