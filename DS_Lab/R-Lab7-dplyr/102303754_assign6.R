@@ -175,66 +175,8 @@ medicine_data <- data.frame(
     Quantity_in_stock,
     Sales
 )
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+head(medicine_data)
 write.csv(medicine_data, "DataSet.csv", row.names = FALSE)
 
 # 2. Read the data file and show the first 4 record of the file
-medicine_data = read.csv("DataSet.csv")
-head(medicine_data, 4)
 
-# 3. Read the data file and show the last 4 record of the file
-tail(medicine_data, 4)
-
-# 4. Find the correlation between Quantity_in_stock and Exp_date
-Exp_secs <- as.numeric(as.Date(Exp_date))
-correl <- cor(medicine_data$Quantity_in_stock, Exp_secs)
-print(paste("Correlation between Quantity_in_stock and Exp_date (in seconds) =", round(correl, 4)))
-
-# 5. Plot the bar graph for the Sales with year of manufacturing
-# `aggregate()` is a base R function that helps bring together groups of data!
-year_sales <- aggregate(Sales ~ Manf_year, data = medicine_data, sum)
-barplot(
-    height = year_sales$Sales,
-    names.arg = year_sales$Manf_year,
-    xlab = "Manufacturing Year",
-    ylab = "Total Sales",
-    main = "Sales vs Manufacturing Year",
-    col = "skyblue",
-    border = "blue"
-)
-
-# 6. Find the company(s) having more than one type of medicine
-medicine_data %>%
-    group_by(Company) %>%
-    summarise(distinct_meds = n_distinct(Med_Name)) %>%
-    filter(distinct_meds > 1)
-
-# 7. Find the types of Medicines available
-unique(medicine_data$Med_Name)
-
-# 8. Which medicines are expiring? Show by box plots.
-expiring_meds <- filter(medicine_data, Exp_date < as.Date("2025-01-01"))
-boxplot(
-    Quantity_in_stock,
-    data = expiring_meds,
-    col = "lightblue",
-    main = "Stock Distribution for Expiring Medicines (Before 2025)",
-    xlab = "Expiring Meds",
-    ylab = "Stock"
-)
-
-# 9. Find the average stock in the store
-medicine_data %>% summarise(Average_Stock = mean(Quantity_in_stock))
-
-# 10. Draw the regression line between Manufacturing year and Sales
-plot(
-    x = medicine_data$Manf_year,
-    y = medicine_data$Sales,
-    main = "Regression Line: Sales vs Manufacturing Year",
-    xlab = "Manufacturing Year",
-    ylab = "Sales",
-    pch = 19,
-    col = "blue"
-)
-model <- lm(Sales ~ Manf_year, data = medicine_data)
-abline(model, col = "red", lwd = 2)
