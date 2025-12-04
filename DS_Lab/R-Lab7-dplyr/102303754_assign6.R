@@ -4,17 +4,16 @@ library(dplyr)
 set.seed(42)
 
 
-
 # Q1. Generating dataset with 20 different years for each country
 # Simple dataset creation using only base R
 
 # Define countries and their continents
 Country <- c(
-    "India", "China", "Japan", "Indonesia",           # Asia
-    "Germany", "France", "Italy", "Spain",            # Europe
-    "Nigeria", "Egypt", "South Africa", "Kenya",      # Africa
-    "USA", "Canada", "Brazil", "Mexico",              # North America
-    "Argentina", "Chile", "Peru", "Colombia"          # South America
+    "India", "China", "Japan", "Indonesia", # Asia
+    "Germany", "France", "Italy", "Spain", # Europe
+    "Nigeria", "Egypt", "South Africa", "Kenya", # Africa
+    "USA", "Canada", "Brazil", "Mexico", # North America
+    "Argentina", "Chile", "Peru", "Colombia" # South America
 )
 
 Continent <- c(
@@ -82,7 +81,9 @@ head(data)
 
 
 # 1. How many unique countries are represented per continent?
-data %>% group_by(Continent) %>% summarise(UniqueCountries = n_distinct(Country))
+data %>%
+    group_by(Continent) %>%
+    summarise(UniqueCountries = n_distinct(Country))
 
 
 # 2. Which European nation had the lowest GDP per capita in a given year?
@@ -106,7 +107,7 @@ max_total_gdp_countries <- data %>%
     group_by(Country) %>%
     summarise(total_gdp = sum(gdpPerc)) %>%
     slice_max(total_gdp, n = 5) %>%
-    .$Country                   # magrittr placeholder `.` used for extraction!
+    .$Country # magrittr placeholder `.` used for extraction!
 print(paste(
     paste(max_total_gdp_countries, collapse = ", "),
     "have the highest total GDP over all years"
@@ -114,7 +115,9 @@ print(paste(
 
 
 # 5. What countries and years had life expectancies of at least 80 years?
-data %>% filter(LifeExp >= 80) %>% select(Country, Year)
+data %>%
+    filter(LifeExp >= 80) %>%
+    select(Country, Year)
 
 
 # 6. What 10 countries have the strongest correlation (in either direction) between life expectancy and per capita GDP?
@@ -122,7 +125,7 @@ data %>%
     group_by(Country) %>%
     summarise(corr = cor(LifeExp, gdpPerc)) %>%
     arrange(desc(abs(corr))) %>%
-    slice_head(n = 10)                          # Can also directly use head(10)!
+    slice_head(n = 10) # Can also directly use head(10)!
 
 
 # 7. Which combinations of continent (besides Asia) and year have the highest average population across all countries?
@@ -148,22 +151,27 @@ data %>%
     filter(Year != year, Pop < lag(Pop), LifeExp > lag(LifeExp))
 
 
-
 # Q2. Use R to answer the following questions:
 
 # 1. Create a database file “DataSet.csv” that contains 10 records of medicine with attributes:-
 # MedID, Med_Name, Company, Manf_year, Exp_date, Quantity_in_stock, Sales
 MedID <- 1:10
-Med_Name <- c("Paracetol", "Coughnil", "GlucoFast", "PainAway", "HealMax",
-              "Allerclear", "Coughnil Plus", "GlucoFast XR", "VitaCure",
-              "PainAway Forte")
-Company <- c("MediHealth", "PharmaLife", "WellnessCo", "MediHealth",
-             "HealthGen", "PharmaLife", "PharmaLife", "WellnessCo",
-             "NutriLabs", "MediHealth")
+Med_Name <- c(
+    "Paracetol", "Coughnil", "GlucoFast", "PainAway", "HealMax",
+    "Allerclear", "Coughnil Plus", "GlucoFast XR", "VitaCure",
+    "PainAway Forte"
+)
+Company <- c(
+    "MediHealth", "PharmaLife", "WellnessCo", "MediHealth",
+    "HealthGen", "PharmaLife", "PharmaLife", "WellnessCo",
+    "NutriLabs", "MediHealth"
+)
 Manf_year <- c(2018, 2019, 2020, 2019, 2021, 2018, 2022, 2020, 2023, 2019)
-Exp_date <- as.Date(c("2025-06-30", "2024-11-15", "2026-03-01", "2023-10-12",
-                      "2025-09-05", "2024-02-20", "2025-12-10", "2026-09-18",
-                      "2026-01-01", "2023-05-25"))
+Exp_date <- as.Date(c(
+    "2025-06-30", "2024-11-15", "2026-03-01", "2023-10-12",
+    "2025-09-05", "2024-02-20", "2025-12-10", "2026-09-18",
+    "2026-01-01", "2023-05-25"
+))
 Quantity_in_stock <- c(500, 300, 450, 150, 700, 200, 350, 400, 250, 100)
 Sales <- c(12000, 8500, 15000, 4000, 18000, 6000, 10000, 14500, 9000, 5000)
 medicine_data <- data.frame(
@@ -179,4 +187,3 @@ head(medicine_data)
 write.csv(medicine_data, "DataSet.csv", row.names = FALSE)
 
 # 2. Read the data file and show the first 4 record of the file
-
