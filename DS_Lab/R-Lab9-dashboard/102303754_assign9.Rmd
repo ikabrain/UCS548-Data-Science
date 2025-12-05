@@ -27,14 +27,14 @@ runtime: shiny
 ```{r setup, include=FALSE}
 library(dplyr)
 library(flexdashboard)
+library(ggplot2)
 library(shiny)
 
 data(iris)
 df <- iris
 ```
 
-## Row {data-height=200}
------------------------------------------------------------------------
+## \## Row {data-height="200"}
 
 ### Number of clusters
 
@@ -95,13 +95,28 @@ observeEvent(input$feat.x, {
 })
 ```
 
-## Row {data-height=500}
------------------------------------------------------------------------
+## \## Row {data-height="500"}
 
 ### Species clusters
 
 ```{r}
-
+renderPlot({
+    req(input$feat.x, input$feat.y)
+    
+    ggplot(iris) +
+      aes(
+        x = .data[[input$feat.x]],
+        y = .data[[input$feat.y]],
+        color = .data[["Species"]]
+      ) +
+      geom_point() +
+      theme_minimal() +
+      theme(
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        legend.justification = c(1, 1)
+      )
+})
 ```
 
 ### k-means clusters
@@ -110,8 +125,7 @@ observeEvent(input$feat.x, {
 
 ```
 
-## Row {data-height=300}
------------------------------------------------------------------------
+## \## Row {data-height="300"}
 
 ### Iris data
 
