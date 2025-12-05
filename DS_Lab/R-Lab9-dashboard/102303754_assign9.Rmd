@@ -1,7 +1,7 @@
 ---
 title: "My Iris Dashboard"
 author: "Ikansh Mahajan"
-output: 
+output:
   flexdashboard::flex_dashboard:
     orientation: rows
     vertical_layout: fill
@@ -39,15 +39,25 @@ df <- iris
 ### Number of clusters
 
 ```{r}
-sliderInput(
+uiOutput("cluster_slider")
+```
+
+```{r, context="server"}
+output$cluster_slider <- renderUI({
+  req(input$feat.x, input$feat.y)
+
+  max_k <- nrow(unique(df[, c(input$feat.x, input$feat.y)]))
+
+  sliderInput(
     "n.cluster",
     label = NULL,
     min = 1,
-    max = nrow(iris),
-    value = 3,
+    max = max_k,
+    value = min(3, max_k),
     step = 1,
     ticks = FALSE
-)
+  )
+})
 ```
 
 ### Number of iterations
@@ -101,28 +111,66 @@ observeEvent(input$feat.x, {
 
 ```{r}
 renderPlot({
-    req(input$feat.x, input$feat.y)
-    
-    ggplot(iris) +
-      aes(
-        x = .data[[input$feat.x]],
-        y = .data[[input$feat.y]],
-        color = .data[["Species"]]
-      ) +
-      geom_point() +
-      theme_minimal() +
-      theme(
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        legend.justification = c(1, 1)
-      )
+  req(input$feat.x, input$feat.y, iris)
+  
+  ggplot(iris) +
+    aes(
+      x = .data[[input$feat.x]],
+      y = .data[[input$feat.y]],
+      color = .data[["Species"]]
+    ) +
+    geom_point() +
+    theme_minimal() +
+    theme(
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      legend.title = element_blank(),
+      legend.justification = c(1, 1)
+    )
 })
 ```
 
 ### k-means clusters
 
 ```{r}
+km_reactive <- reactive({
+  req(input$feat.x, input$feat.y, input$n.cluster, input$n.iter, iris, df)
+  
+  kmeans(
+    df[, c(input$feat.x, input$feat.y)],
+    centers = input$n.cluster,
+    iter.max = input$n.iter
+  )
+})
 
+df_with_cluster <- reactive({
+  req(km_reactive, df)
+  
+  km <- km_reactive()
+  df$cluster <<- factor(km$cluster)
+  df
+})
+
+renderPlot({
+  req(input$feat.x, input$feat.y, km_reactive, df_with_cluster)
+    
+  df_with_cluster()   # Adds cluster column to data frame
+  
+  ggplot(df) +
+    aes(
+      x = .data[[input$feat.x]],
+      y = .data[[input$feat.y]],
+      color = cluster
+    ) +
+    geom_point() +
+    theme_minimal() +
+    theme(
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      legend.title = element_blank(),
+      legend.justification = c(1, 1)
+    )
+})
 ```
 
 ## \## Row {data-height="300"}
