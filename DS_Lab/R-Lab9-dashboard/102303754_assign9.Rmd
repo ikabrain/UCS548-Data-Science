@@ -9,6 +9,21 @@ output:
 runtime: shiny
 ---
 
+```{css}
+.dashboard-page .section, 
+.dashboard-page .section .chart-wrapper, 
+.box, 
+.box-body, 
+.chart-stage {
+  overflow: visible !important;
+}
+
+.selectize-control, 
+.selectize-dropdown {
+  z-index: 99999 !important;
+}
+```
+
 ```{r setup, include=FALSE}
 library(dplyr)
 library(flexdashboard)
@@ -51,13 +66,33 @@ sliderInput(
 ### X feature
 
 ```{r}
-
+selectizeInput(
+    inputId = "feat.x",
+    label = NULL,
+    choices = names(iris)[1:4],
+    selected = "Sepal.Length"
+)
 ```
 
 ### Y feature
 
 ```{r}
+selectizeInput(
+    inputId = "feat.y",
+    label = NULL,
+    choices = names(iris)[1:4],
+    selected = "Sepal.Width"
+)
+```
 
+```{r, context="server"}
+observeEvent(input$feat.x, {
+  updateSelectizeInput(
+    session,
+    "feat.y",
+    choices = setdiff(names(iris)[1:4], input$feat.x)
+  )
+})
 ```
 
 ## Row {data-height=500}
