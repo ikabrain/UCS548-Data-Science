@@ -18,19 +18,34 @@ data(iris)
 df <- iris
 ```
 
-## Row {data-height=150}
+## Row {data-height=200}
 -----------------------------------------------------------------------
 
 ### Number of clusters
 
 ```{r}
-
+sliderInput(
+    "n.cluster",
+    label = NULL,
+    min = 1,
+    max = nrow(iris),
+    value = 3,
+    step = 1,
+    ticks = FALSE
+)
 ```
 
 ### Number of iterations
 
 ```{r}
-
+sliderInput(
+    "n.iter",
+    label = NULL,
+    min = 1,
+    max = 300,
+    value = 20,
+    ticks = FALSE
+)
 ```
 
 ### X feature
@@ -60,7 +75,7 @@ df <- iris
 
 ```
 
-## Row {data-height=350}
+## Row {data-height=300}
 -----------------------------------------------------------------------
 
 ### Iris data
