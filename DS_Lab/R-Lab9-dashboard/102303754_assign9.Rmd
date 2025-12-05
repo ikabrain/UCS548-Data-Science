@@ -25,6 +25,7 @@ runtime: shiny
 ```
 
 ```{r setup, include=FALSE}
+library(DT)
 library(dplyr)
 library(flexdashboard)
 library(ggplot2)
@@ -34,7 +35,7 @@ data(iris)
 df <- iris
 ```
 
-## \## Row {data-height="200"}
+## \## Row {data-height="120"}
 
 ### Number of clusters
 
@@ -173,10 +174,10 @@ renderPlot({
 })
 ```
 
-## \## Row {data-height="300"}
+## \## Row {data-height="380"}
 
 ### Iris data
 
 ```{r}
-
+renderTable({ df })
 ```
