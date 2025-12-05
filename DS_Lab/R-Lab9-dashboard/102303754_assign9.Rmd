@@ -1,36 +1,70 @@
 ---
 title: "My Iris Dashboard"
+author: "Ikansh Mahajan"
 output: 
   flexdashboard::flex_dashboard:
     orientation: rows
     vertical_layout: fill
+    source_code: embed
+runtime: shiny
 ---
 
 ```{r setup, include=FALSE}
+library(dplyr)
 library(flexdashboard)
+library(shiny)
+
+data(iris)
+df <- iris
 ```
 
-## Row {data-width=650}
+## Row {data-height=150}
 -----------------------------------------------------------------------
 
-### Chart A
+### Number of clusters
 
 ```{r}
 
 ```
 
-## Row {data-width=350}
+### Number of iterations
+
+```{r}
+
+```
+
+### X feature
+
+```{r}
+
+```
+
+### Y feature
+
+```{r}
+
+```
+
+## Row {data-height=500}
 -----------------------------------------------------------------------
 
-### Chart B
+### Species clusters
 
 ```{r}
 
 ```
 
-### Chart C
+### k-means clusters
 
 ```{r}
 
 ```
 
+## Row {data-height=350}
+-----------------------------------------------------------------------
+
+### Iris data
+
+```{r}
+
+```
