@@ -81,16 +81,20 @@ boxplot(df)
 ```
 
 # Setosa {data-navmenu="Select Category"}
-```{r} 
+
+```{r}
 library(dplyr)
    filter(df, Species == "setosa")
 ```
+
 # Versicolor {data-navmenu="Select Category"}
 
-```{r} 
+```{r}
    filter(df, Species == "versicolor")
 ```
+
 # Virginica {data-navmenu="Select Category"}
-```{r} 
+
+```{r}
    filter(df, Species == "virginica")
 ```
